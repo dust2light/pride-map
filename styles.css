@@ -2,3 +2,5 @@
 .swipe-card{transition:transform .18s ease,opacity .18s ease;touch-action:pan-y;overflow:hidden}.swipe-card:active{transform:scale(.985)}
 .card-photo{width:100%;height:210px;border-radius:14px;object-fit:cover;background:#303d58;margin:-2px 0 11px}.card-photo-placeholder{width:100%;height:210px;border-radius:14px;background:linear-gradient(135deg,#303d58,#1f2937);display:flex;align-items:center;justify-content:center;font-size:58px;margin:-2px 0 11px}
 .swipe-actions{display:flex;justify-content:center;gap:18px;margin:16px 0}.swipe-actions button{width:58px;height:58px;border-radius:50%;border:1px solid #334155;background:#263148;color:#fff;font-size:25px}.swipe-actions .like-action{background:#ff4f87;border-color:#ff4f87}
+
+.profile-gallery{position:relative;width:100%;height:360px;border-radius:18px;overflow:hidden;background:#111827;margin:12px 0 6px}.gallery-photo{display:none;width:100%;height:100%;object-fit:cover;cursor:pointer}.gallery-photo.active{display:block}.gallery-dots{text-align:center;letter-spacing:5px;color:#64748b;margin:4px 0 14px}.gallery-dots span{cursor:pointer;font-size:12px}.gallery-dots span.active{color:#ff4f87}
