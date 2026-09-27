@@ -81,3 +81,27 @@ showView=async function(view){
  }
  else originalShowView(view);
 };
+
+
+let activeChat=null, chatChannel=null;
+async function openChat(matchId){
+ const {data:{user}}=await db.auth.getUser();
+ if(!user)return toast("Bitte zuerst anmelden");
+ activeChat=matchId;
+ const pv=document.querySelector("#profileView");
+ document.querySelector("#profiles").style.display="none";
+ document.querySelector("#viewTitle").style.display="none";
+ pv.classList.add("show");
+ const {data:msgs}=await db.from("messages").select("id,sender_id,body,created_at").eq("match_id",matchId).order("created_at",{ascending:true});
+ pv.innerHTML='<h2>💬 Chat</h2><div id="chatMessages" style="max-height:42vh;overflow:auto;margin:12px 0"></div><div style="display:flex;gap:8px"><input id="chatInput" maxlength="2000" placeholder="Nachricht…"><button class="save-btn" id="sendChat">Senden</button></div>';
+ const box=document.querySelector("#chatMessages");
+ (msgs||[]).forEach(m=>addChatMessage(m,user.id));
+ document.querySelector("#sendChat").onclick=async()=>{const input=document.querySelector("#chatInput");const body=input.value.trim();if(!body)return;const {error}=await db.from("messages").insert({match_id:matchId,sender_id:user.id,body});if(error)toast("Nachricht konnte nicht gesendet werden");else input.value=""};
+ if(chatChannel)await db.removeChannel(chatChannel);
+ chatChannel=db.channel("mapdate-chat-"+matchId).on("postgres_changes",{event:"INSERT",schema:"public",table:"messages",filter:"match_id=eq."+matchId},payload=>addChatMessage(payload.new,user.id)).subscribe();
+}
+function addChatMessage(m,myId){
+ const box=document.querySelector("#chatMessages");if(!box)return;
+ const d=document.createElement("div");d.style.cssText="margin:7px 0;padding:9px 11px;border-radius:12px;background:"+(m.sender_id===myId?"#ff4f87":"#263148")+";max-width:82%;margin-left:"+(m.sender_id===myId?"auto":"0");
+ d.textContent=m.body;box.appendChild(d);box.scrollTop=box.scrollHeight;
+}
