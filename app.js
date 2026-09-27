@@ -22,7 +22,7 @@ async function loadMatches(){
 
 async function uploadAvatar(file){
   if(!currentUser){toast("Bitte zuerst einloggen");return}
-  if(!file||!/^image\\/(jpeg|png|webp)$/.test(file.type)){toast("Nur JPG, PNG oder WebP");return}
+  if(!file||!/^image\/(jpeg|png|webp)$/.test(file.type)){toast("Nur JPG, PNG oder WebP");return}
   if(file.size>5*1024*1024){toast("Maximal 5 MB pro Foto");return}
   const ext=file.type.split("/")[1].replace("jpeg","jpg");
   const path=`${currentUser.id}/${crypto.randomUUID()}.${ext}`;
