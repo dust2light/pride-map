@@ -10,6 +10,8 @@ MapDate is a mobile-first dating map prototype.
 - Interest/like interaction
 - Browser geolocation permission flow
 - Mobile navigation shell
+- Installable PWA shell with offline caching
+- GitHub Pages deployment workflow
 
 ## Next build stages
 
